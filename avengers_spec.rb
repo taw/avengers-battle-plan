@@ -3,6 +3,34 @@
 require "./avengers"
 
 describe Avengers do
+  describe "#initialize" do
+    it "Avengers are sorted" do
+      Avengers.new([6,2,4], [], []).avengers.should == [2,4,6]
+    end
+
+    it "Aliens are are sorted by power" do
+      Avengers.new([], [1,10,5], [10,7,3]).aliens.should == [[1,10], [5,3], [10,7]]
+    end
+
+    it "Zero count aliens should not be included" do
+      Avengers.new([], [1,10,5], [10,0,3]).aliens.should == [[1,10], [5,3]]
+    end
+  end
+
+  it '#can_avengers_win?' do
+    Avengers.new([10], [100], [1]).can_avengers_win?.should == false
+    Avengers.new([10], [10], [1]).can_avengers_win?.should == true
+  end
+
+  it "#number_of_aliens_each_avenger_can_defeat" do
+    av = Avengers.new([2,3,5], [1,3,4], [2,9,4])
+    av.number_of_aliens_each_avenger_can_defeat.should == [2, 11, 15]
+  end
+
+  it "#difficult_aliens" do
+    av = Avengers.new([2,3,5], [1,3,4], [2,9,4])
+    av.difficult_aliens.should == [4, 13, 15]
+  end
 
   context "Acceptance tests" do
     it "Test 1" do
